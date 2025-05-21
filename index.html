@@ -1,47 +1,71 @@
-
-<!doctype html>
-<html class="no-js" lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Darkener CRM</title>
-    <!--Links de Foundation CSS Framework-->
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/app.css">
-  </head>
+    <!--Link de Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+</head>
 <body>
-  <div class="grid-y grid-frame">
-    <nav class="cell shrink header">
-      <div class="grid-x grid-margin-x">
-        <div class="cell shrink align-center-middle">
-          <h1 class="h4">Darkener CRM</h1>
+    <!--Barra de Navegacion-->
+    <nav class="navbar navbar-expand-md text-bg-primary">
+        <div class="container-fluid">
+            <h1 class="navbar-brand text-light">Darkener CRM</h1>
+            <!--Boton para crear una tarjeta-->
+            <button class="btn btn-outline-light" id="newKanbanCard">+ Nuevo</button>
         </div>
-        <div class="cell auto">
-        </div>
-        <div class="cell shrink">
-          <button type="button" class="button primary">Nuevo</button>
-        </div>
-      </div>
     </nav>
-      <main class="cell auto body grid-container">
-        <div class="grid-x grid-margin-x">
-          <section class="small-4 cell cell-block-y">
-            <p>kaban 1</p>
-          </section>
-          <section class="small-4 cell cell-block-y">
-            <p>kanban 2</p>
-          </section>
-          <section class="small-4 cell cell-block-y">
-            <p>kanban 3</p>
-          </section>
+    <main class="container-fluid pt-2">
+        <div class="row py-2 px-3">
+            <!-- Columna Kanban de Nuevo Cliente-->
+            <section class="col-sm-12 col-md-6 col-lg-3 mb-2">
+                <div class="card text-bg-secondary">
+                    <div class="card-body">
+                        <h4 class="card-title text-uppercase py-1 text-center">Nuevo Cliente</h4>
+                        <div class="items" id="newClientKanban">
+                            <!--Acá se deben crear las tarjetas con Javascript-->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Columna Kanban de Cliente Interesado-->
+            <section class="col-sm-12 col-md-6 col-lg-3 mb-2">
+                <div class="card text-bg-info">
+                    <div class="card-body">
+                        <h4 class="card-title text-uppercase py-1 text-center">Interesado</h4>
+                        <div class="items" id="interesadoKanban">
+                            <!--Acá se deben crear las tarjetas con Javascript-->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Columna Kanban de Cliente Concretado-->
+            <section class="col-sm-12 col-md-6 col-lg-3 mb-2">
+                <div class="card text-bg-success">
+                    <div class="card-body">
+                        <h4 class="card-title text-uppercase py-1 text-center">Concretado</h4>
+                        <div class="items" id="concretadoKanban">
+                            <!--Acá se deben crear las tarjetas con Javascript-->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Columna Kanban de Cliente Perdido-->
+            <section class="col-sm-12 col-md-6 col-lg-3 mb-2">
+                <div class="card text-bg-danger">
+                    <div class="card-body">
+                        <h4 class="card-title text-uppercase py-1 text-center">Perdido</h4>
+                        <div class="items" id="perdidoKanban">
+                            <!--Acá se deben crear las tarjetas con Javascript-->
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-      </main>
-  </div>
-    <!--Scripts de Foundation CSS Framework-->
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/vendor/what-input.js"></script>
-    <script src="js/vendor/foundation.js"></script>
-    <script src="js/app.js"></script>
-  </body>
+    </main>
+
+    <!--Bootstrap Javascript-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+</body>
 </html>

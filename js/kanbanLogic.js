@@ -1,5 +1,5 @@
 // Cargar contenido del DOM primero
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const nuevoClienteColumna = document.getElementById('newClientKanban');
     const interesadoColumna = document.getElementById('interesadoKanban');
     const concretadoColumna = document.getElementById('concretadoKanban');
@@ -17,7 +17,7 @@ fetch('../database/contacts.json')
             card.className = 'card mb-2 border-dark';
             // Creo el body de la card
             const cardBody = document.createElement('div');
-            cardBody.className ='card-body';
+            cardBody.className = 'card-body';
             // Creo el titulo de la card
             const nombre = document.createElement('h5');
             nombre.className = 'card-title text-center';
@@ -41,7 +41,7 @@ fetch('../database/contacts.json')
             email.textContent = 'Email: ' + lead.email;
             direccion.textContent = 'Dirección: ' + lead.direccion;
             productoInteresado.textContent = 'Interés: ' + lead.producto_interesado;
-            precioProducto.innerHTML = 'Valor: ' + '$' + lead.precio_producto;
+            precioProducto.textContent = 'Valor: ' + '$' + lead.precio_producto;
             // Se arma la estructura de la carta
             card.appendChild(cardBody);
             cardBody.appendChild(nombre);

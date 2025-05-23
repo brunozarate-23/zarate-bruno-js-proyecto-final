@@ -63,19 +63,19 @@ fetch('../database/contacts.json')
             const iconPerdido = document.createElement('img');
 
             // Clases de Bootstrap para cada botón y se agrega su icono
-            btnNuevoCliente.className = 'btn btn-primary mx-2 px-3';
+            btnNuevoCliente.className = 'btn btn-primary mx-1 px-3';
             iconNuevoCliente.src = '../img/nuevocliente.svg';
             btnNuevoCliente.appendChild(iconNuevoCliente);
 
-            btnInteresado.className = 'btn btn-info mx-2 px-3';
+            btnInteresado.className = 'btn btn-info mx-1 px-3';
             iconInteresado.src = '../img/interesado.svg';
             btnInteresado.appendChild(iconInteresado);
 
-            btnConcretado.className = 'btn btn-success mx-2 px-3';
+            btnConcretado.className = 'btn btn-success mx-1 px-3';
             iconConcretado.src = '../img/concretado.svg';
             btnConcretado.appendChild(iconConcretado);
 
-            btnPerdido.className = 'btn btn-danger mx-2 px-3';
+            btnPerdido.className = 'btn btn-danger mx-1 px-3';
             iconPerdido.src = '../img/perdido.svg';
             btnPerdido.appendChild(iconPerdido);
 

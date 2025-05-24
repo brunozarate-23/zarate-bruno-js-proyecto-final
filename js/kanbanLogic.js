@@ -8,8 +8,7 @@ async function cargarDatos() {
         if (local) {
             data = JSON.parse(local);
         } else {
-            const basePath = window.location.pathname.split("/")[1];
-            const response = await fetch(`/${basePath}/database/contacts.json`)
+            const response = await fetch('./database/contacts.json')
             if (!response.ok) {
                 throw new Error('Error al cargar el archivo "contacts.json');
             }
@@ -32,6 +31,10 @@ function guardarDatos() {
 
 // Es la lógica principal del Kanban
 window.renderizarKanban = function () {
+    // Primero hay que limpiar las columnas, sino a veces se duplicaban
+    const columnas = ['newClientKanban','interesadoKanban','concretadoKanban','perdidoKanban'];
+    columnas.forEach(id => document.getElementById(id).innerHTML = '');
+    
     data.forEach(lead => {
 
         // Creamos las tarjetas
@@ -79,10 +82,10 @@ window.renderizarKanban = function () {
         // Se crean los botones y se suma la función de moverlos.
         // Copilot dió la idea de los 3 parametros para que sean menos lineas,
         // Ya que previamente era una función por cada botón.
-        const btnNuevoCliente = crearBoton('../img/nuevocliente.svg', 'btn btn-primary', () => moverTarjeta('newClientKanban'));
-        const btnInteresado = crearBoton('../img/interesado.svg', 'btn btn-info', () => moverTarjeta('interesadoKanban'));
-        const btnConcretado = crearBoton('../img/concretado.svg', 'btn btn-success', () => moverTarjeta('concretadoKanban'));
-        const btnPerdido = crearBoton('../img/perdido.svg', 'btn btn-danger', () => moverTarjeta('perdidoKanban'));
+        const btnNuevoCliente = crearBoton('/img/nuevocliente.svg', 'btn btn-primary', () => moverTarjeta('newClientKanban'));
+        const btnInteresado = crearBoton('/img/interesado.svg', 'btn btn-info', () => moverTarjeta('interesadoKanban'));
+        const btnConcretado = crearBoton('/img/concretado.svg', 'btn btn-success', () => moverTarjeta('concretadoKanban'));
+        const btnPerdido = crearBoton('/img/perdido.svg', 'btn btn-danger', () => moverTarjeta('perdidoKanban'));
 
         // Función que permite mover las tarjetas entre columnas del Kanban
         function moverTarjeta(nuevoEstado) {
@@ -113,7 +116,7 @@ function crearBoton(iconSrc, btnClass, callback) {
     const btn = document.createElement('button');
     const icon = document.createElement('img');
     icon.src = iconSrc;
-    btn.className = btnClass + ' mx-2 px-3';
+    btn.className = btnClass + ' mx-1 px-3';
     btn.appendChild(icon);
     btn.addEventListener('click', callback);
     return btn;

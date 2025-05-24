@@ -6,7 +6,7 @@ document.getElementById('formCrearLead').addEventListener('submit', function (ev
 
     // Traer los datos
     const formulario = event.target;
-    // Dar el formato del JSON/localStorage
+    // Crear el lead en el formato de la database
     const nuevoLead = {
         nombre: formulario.nombre.value,
         telefono: formulario.telefono.value,
@@ -24,7 +24,7 @@ document.getElementById('formCrearLead').addEventListener('submit', function (ev
     localStorage.setItem('leads', JSON.stringify(data));
 
     // Se vuelve a renderizar para mostrar la tarjeta
-    renderizarKanban();
+    location.reload();
 
     // Cerrar modal automaticamente (buscado en reddit para lograrlo)
     const modalElement = document.getElementById('nuevoLead');

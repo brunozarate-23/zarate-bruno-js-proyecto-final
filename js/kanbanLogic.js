@@ -1,102 +1,121 @@
-// Cargar contenido del DOM primero
-document.addEventListener('DOMContentLoaded', function () {
-    const nuevoClienteColumna = document.getElementById('newClientKanban');
-    const interesadoColumna = document.getElementById('interesadoKanban');
-    const concretadoColumna = document.getElementById('concretadoKanban');
-    const perdidoColumna = document.getElementById('perdidoKanban');
-});
+let data;
+// Cargamos los datos desde 'Contacts.json', salvo que ya se hayan cargado previamente en localStorage y renderizamos las tarjetas
+async function cargarDatos() {
+    // Try & Catch para detectar errores en la carga de datos
+    try {
+        const local = localStorage.getItem('leads');
 
-// Traemos la data de Contacts.json con un fetch
-fetch('../database/contacts.json')
-    .then(response => response.json())
-    .then(data => {
-        // Busco recorrer toda la data para crear una tarjeta en su columna
-        data.forEach(lead => {
-
-            // Creo un div con clase de Bootstrap
-            const card = document.createElement('div');
-            card.className = 'card mb-2 border-dark';
-
-            // Creo el body de la card
-            const cardBody = document.createElement('div');
-            cardBody.className = 'card-body';
-
-            // Creo el titulo de la card
-            const nombre = document.createElement('h5');
-            nombre.className = 'card-title text-center';
-            nombre.textContent = lead.nombre;
-
-            // Creo una lista con cada uno de los componentes del lead
-            const listGroup = document.createElement('ul');
-            const telefono = document.createElement('li');
-            const email = document.createElement('li');
-            const direccion = document.createElement('li');
-            const productoInteresado = document.createElement('li');
-            const precioProducto = document.createElement('li');
-
-            // Le agrego las clases de Bootstrap
-            listGroup.className = 'list-group list-group-flush';
-            telefono.className = 'list-group-item';
-            email.className = 'list-group-item';
-            direccion.className = 'list-group-item';
-            productoInteresado.className = 'list-group-item';
-            precioProducto.className = 'list-group-item';
-
-            // Agrego el texto de cada lead
-            telefono.textContent = 'Télefono: ' + lead.telefono;
-            email.textContent = 'Email: ' + lead.email;
-            direccion.textContent = 'Dirección: ' + lead.direccion;
-            productoInteresado.textContent = 'Interés: ' + lead.producto_interesado;
-            precioProducto.textContent = 'Valor: ' + '$' + lead.precio_producto;
-
-            // Botones para cambiar el estado del Lead
-            const btnNuevoCliente = document.createElement('button');
-            const iconNuevoCliente = document.createElement('img');
-
-            const btnInteresado = document.createElement('button');
-            const iconInteresado = document.createElement('img');
-
-            const btnConcretado = document.createElement('button');
-            const iconConcretado = document.createElement('img');
-
-            const btnPerdido = document.createElement('button');
-            const iconPerdido = document.createElement('img');
-
-            // Clases de Bootstrap para cada botón y se agrega su icono
-            btnNuevoCliente.className = 'btn btn-primary mx-2 px-3';
-            iconNuevoCliente.src = '../img/nuevocliente.svg';
-            btnNuevoCliente.appendChild(iconNuevoCliente);
-
-            btnInteresado.className = 'btn btn-info mx-2 px-3';
-            iconInteresado.src = '../img/interesado.svg';
-            btnInteresado.appendChild(iconInteresado);
-
-            btnConcretado.className = 'btn btn-success mx-2 px-3';
-            iconConcretado.src = '../img/concretado.svg';
-            btnConcretado.appendChild(iconConcretado);
-
-            btnPerdido.className = 'btn btn-danger mx-2 px-3';
-            iconPerdido.src = '../img/perdido.svg';
-            btnPerdido.appendChild(iconPerdido);
-
-            // Se arma la estructura de la carta
-            card.appendChild(cardBody);
-            cardBody.appendChild(nombre);
-            cardBody.appendChild(listGroup);
-            listGroup.appendChild(telefono);
-            listGroup.appendChild(email);
-            listGroup.appendChild(direccion);
-            listGroup.appendChild(productoInteresado);
-            listGroup.appendChild(precioProducto);
-            cardBody.appendChild(btnNuevoCliente);
-            cardBody.appendChild(btnInteresado);
-            cardBody.appendChild(btnConcretado);
-            cardBody.appendChild(btnPerdido);
-
-            // Agregar a la columna correcta segun su estado en el Pipeline de Ventas
-            const columna = document.getElementById(lead.estado_lead);
-            if (columna) {
-                columna.appendChild(card);
+        if (local) {
+            data = JSON.parse(local);
+        } else {
+            const response = await fetch('../database/contacts.json');
+            if (!response.ok) {
+                throw new Error('Error al cargar el archivo "contacts.json');
             }
-        });
-    })
+
+            data = await response.json();
+            localStorage.setItem('leads', JSON.stringify(data));
+        }
+
+        renderizarKanban();
+    } catch (error) {
+        console.error('Error al cargar los datos', error);
+        alert('Erro al cargar los leads');
+    }
+}
+
+// Funcion que solo se dedica a guardar los datos en localStorage
+function guardarDatos() {
+    localStorage.setItem('leads', JSON.stringify(data));
+}
+
+// Es la lógica principal del Kanban
+window.renderizarKanban = function () {
+    data.forEach(lead => {
+
+        // Creamos las tarjetas
+        const card = document.createElement('div');
+        card.className = 'card mb-2 border-dark';
+
+        const cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
+
+        // Se crea cada elemento de la tarjeta según el Lead
+        const nombre = document.createElement('h5');
+        nombre.className = 'card-title text-center';
+        nombre.textContent = lead.nombre;
+
+        const listGroup = document.createElement('ul');
+        listGroup.className = 'list-group list-group-flush';
+
+        const telefono = document.createElement('li');
+        telefono.className = 'list-group-item';
+        telefono.textContent = 'Télefono: ' + lead.telefono;
+
+        const email = document.createElement('li');
+        email.className = 'list-group-item';
+        email.textContent = 'Email: ' + lead.email;
+
+        const direccion = document.createElement('li');
+        direccion.className = 'list-group-item';
+        direccion.textContent = 'Dirección: ' + lead.direccion;
+
+        const productoInteresado = document.createElement('li');
+        productoInteresado.className = 'list-group-item';
+        productoInteresado.textContent = 'Interés: ' + lead.producto_interesado;
+
+        const precioProducto = document.createElement('li');
+        precioProducto.className = 'list-group-item';
+        precioProducto.textContent = 'Valor: $' + lead.precio_producto;
+
+        // Se agregan a una lista previamente creada
+        listGroup.appendChild(telefono);
+        listGroup.appendChild(email);
+        listGroup.appendChild(direccion);
+        listGroup.appendChild(productoInteresado);
+        listGroup.appendChild(precioProducto);
+
+        // Se crean los botones y se suma la función de moverlos.
+        // Copilot dió la idea de los 3 parametros para que sean menos lineas,
+        // Ya que previamente era una función por cada botón.
+        const btnNuevoCliente = crearBoton('../img/nuevocliente.svg', 'btn btn-primary', () => moverTarjeta('newClientKanban'));
+        const btnInteresado = crearBoton('../img/interesado.svg', 'btn btn-info', () => moverTarjeta('interesadoKanban'));
+        const btnConcretado = crearBoton('../img/concretado.svg', 'btn btn-success', () => moverTarjeta('concretadoKanban'));
+        const btnPerdido = crearBoton('../img/perdido.svg', 'btn btn-danger', () => moverTarjeta('perdidoKanban'));
+
+        // Función que permite mover las tarjetas entre columnas del Kanban
+        function moverTarjeta(nuevoEstado) {
+            lead.estado_lead = nuevoEstado;
+            guardarDatos();
+            const columna = document.getElementById(nuevoEstado);
+            if (columna) columna.appendChild(card);
+        }
+
+        // Se agregan los items, lista y botones a la tarjeta
+        cardBody.appendChild(nombre);
+        cardBody.appendChild(listGroup);
+        cardBody.appendChild(btnNuevoCliente);
+        cardBody.appendChild(btnInteresado);
+        cardBody.appendChild(btnConcretado);
+        cardBody.appendChild(btnPerdido);
+        card.appendChild(cardBody);
+
+        // Finalmente se agrega la tarjeta a su correspondiente columna
+        const columna = document.getElementById(lead.estado_lead);
+        if (columna) columna.appendChild(card);
+    });
+}
+
+// Función que simplifica crear los botones.
+// Copilot recomendó hacerlo de esta manera ya que eran muchas lineas de código.
+function crearBoton(iconSrc, btnClass, callback) {
+    const btn = document.createElement('button');
+    const icon = document.createElement('img');
+    icon.src = iconSrc;
+    btn.className = btnClass + ' mx-2 px-3';
+    btn.appendChild(icon);
+    btn.addEventListener('click', callback);
+    return btn;
+}
+
+await cargarDatos();

@@ -8,7 +8,8 @@ async function cargarDatos() {
         if (local) {
             data = JSON.parse(local);
         } else {
-            const response = await fetch('/database/contacts.json');
+            const basePath = window.location.pathname.split("/")[1];
+            const response = await fetch(`/${basePath}/database/contacts.json`)
             if (!response.ok) {
                 throw new Error('Error al cargar el archivo "contacts.json');
             }
